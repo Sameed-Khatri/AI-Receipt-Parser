@@ -43,8 +43,8 @@ reciept parser/
 ### 1. Clone the Repository
 
 ```sh
-git clone <your-repo-url>
-cd reciept\ parser
+git clone https://github.com/Sameed-Khatri/AI-Receipt-Parser.git
+cd AI-Receipt-Parser
 ```
 
 ### 2. Install Dependencies
@@ -59,13 +59,13 @@ pip install -r requirements.txt
 
 ### 3. Configure Environment
 
-- Set up your `.env` file with API keys and model paths.
+- Set up your `.env` file with API keys and tesseract path.
 ```sh
 GROQ_API_KEY = <API-KEY>
 TESSERACT_PATH = <ABSOLUTE-PATH\tesseract.exe>
 HF_API_TOKEN = <API-KEY>
 ```
-- Ensure Tesseract is installed and available in your system PATH.
+- Ensure Tesseract is installed and available in your system.
 
 ### 4. Run the Server
 
