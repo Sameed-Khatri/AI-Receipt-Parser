@@ -1,0 +1,7 @@
+OCR text:
+{ocr_text}
+
+Extracted JSON:
+{extracted_json}
+
+Output:

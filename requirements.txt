@@ -1,0 +1,9 @@
+torch
+transformers
+pytesseract
+python-dotenv
+pydantic
+fastapi
+uvicorn
+groq
+streamlit
