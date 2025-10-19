@@ -24,7 +24,9 @@ An intelligent, end-to-end system for extracting structured information from sca
 
 ```
 reciept parser/
+├── layoutlm-finetuning.ipynb
 ├── server.py
+├── streamlit.py
 ├── inference/
 │   ├── agent.py
 │   ├── models.py
@@ -80,3 +82,6 @@ The API will be available at `http://localhost:8089`.
 ```sh
 streamlit run streamlit.py
 ```
+
+# Fine-tuning
+`layoutlm-finetuning.ipynb` shows the complete process of how LayoutLMv3 was fine-tuned on the provided dataset and pushed to huggingface hub.
