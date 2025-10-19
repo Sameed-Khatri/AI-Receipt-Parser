@@ -83,5 +83,5 @@ The API will be available at `http://localhost:8089`.
 streamlit run streamlit.py
 ```
 
-# Fine-tuning
+## Fine-tuning
 `layoutlm-finetuning.ipynb` shows the complete process of how LayoutLMv3 was fine-tuned on the provided dataset and pushed to huggingface hub.
