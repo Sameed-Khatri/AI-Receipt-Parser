@@ -1,9 +1,22 @@
+from typing import Dict
 import torch
 from transformers import LayoutLMv3Processor, LayoutLMv3ForTokenClassification
 
 
 class Hunggingface:
+    """
+    wrapper class for hugging face fine tuned layoutlmv3 model and processor for token classification on receipts.
+
+    attributes:
+        __model_id (str): model identifier for the finet uned layoutlmv3.
+        __processor (LayoutLMv3Processor): processor for image, text, and box encoding.
+        __model (LayoutLMv3ForTokenClassification): token classification model instance.
+    """
+
     def __init__(self):
+        """
+        initializes the hugging face model and processor for inference.
+        """
         self.__model_id = "Sameed1/smdk-layoutlmv3-receipts"
         self.__processor = LayoutLMv3Processor.from_pretrained(self.__model_id)
         self.__model = LayoutLMv3ForTokenClassification.from_pretrained(self.__model_id)
@@ -11,7 +24,17 @@ class Hunggingface:
         self.__model.eval()
     
 
-    def _generate_output(self, words, labels):
+    def _generate_output(self, words, labels) -> Dict:
+        """
+        generates structured entity output from model predictions.
+
+        args:
+            words (List[str]): list of words from the receipt extracted using tesseract.
+            labels (List[str]): corresponding predicted labels for each word.
+
+        returns:
+            dict: dictionary with extracted entities (company, date, address, total).
+        """
         entities = {}
         current_label, current_tokens = None, []
 
@@ -43,7 +66,18 @@ class Hunggingface:
         return result
 
 
-    async def run_inference(self, image, words, boxes):
+    async def run_inference(self, image, words, boxes) -> Dict:
+        """
+        runs inference on a receipt image and returns extracted entities.
+
+        args:
+            image (PIL.Image): receipt image.
+            words (List[str]): list of words extracted by tesseract from the receipt.
+            boxes (List[List[int]]): bounding boxes for each word.
+
+        Returns:
+            dict: extracted entities from the receipt.
+        """
         encoding = self.__processor(
             images=image,
             text=words,

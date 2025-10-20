@@ -1,24 +1,32 @@
 import os
 from dotenv import load_dotenv
-from pydantic import BaseModel, Field
 from configs.groq_config import LLM
 from configs.tesseract_config import OCR
 from configs.huggingface_config import Hunggingface
+from .models import AgentOutput
 
 
 load_dotenv()
 
 
-class AgentOutput(BaseModel):
-    company: str = Field(..., description="Name of the company")
-    date: str = Field(..., description="Date of the receipt")
-    address: str = Field(..., description="Address of the company")
-    total: str = Field(..., description="Total amount on the receipt with currency if mentioned")
-    agent_comment: str = Field(..., description="Summary of action performed by the llm and data found in ocr and vision model json")
-
 
 class Agent:
+    """
+    agent class for orchestrating the tesseract ocr, fine tuned layoutlmv3 vision model, and gorq llm pipeline for receipt parsing.
+
+    attributes:
+        __structured_output: pydantic model for agent output.
+        __llm: groq llm wrapper instance.
+        __ocr: tesseract ocr wrapper instance.
+        __hunggingface_model: huggingface layoutlmv3 wrapper instance.
+        __system_prompt: system prompt string for llm.
+        __human_prompt: human prompt string for llm.
+    """
+
     def __init__(self):
+        """
+        initializes the agent, loads prompts, and sets up model instances.
+        """
         base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
         prompts_dir = os.path.join(base_dir, "prompts")
         system_prompt_path = os.path.join(prompts_dir, "system_prompt.txt")
@@ -37,6 +45,15 @@ class Agent:
 
 
     async def pipeline(self, image_path: str):
+        """
+        runs the full pipeline: tesseract, layoutlmv3 inference, prompt formatting, and llm reasoning.
+
+        args:
+            image_path (str): path to the receipt image.
+
+        returns:
+            str: json string of validated agent output.
+        """
         ocr_output = await self.__ocr.run_ocr(image_path=image_path)
         words, boxes, image = ocr_output["words"], ocr_output["boxes"], ocr_output["image"]
 
