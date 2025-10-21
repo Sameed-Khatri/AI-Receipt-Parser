@@ -15,7 +15,7 @@ An intelligent, end-to-end system for extracting structured information from sca
 - **Python**
 - **FastAPI** (API backend)
 - **Uvicorn** (ASGI server)
-- **Tesseract OCR** (text extraction)
+- **Tesseract OCR** (text + bounding box extraction)
 - **Hugging Face Transformers** (LayoutLMv3)
 - **Groq LLM API** (reasoning and validation)
 - **Pydantic** (data validation)
@@ -54,8 +54,8 @@ cd AI-Receipt-Parser
 Create a virtual environment and install required packages:
 
 ```sh
-python -m venv venv
-venv\Scripts\activate   # On Windows
+python -m venv .venv
+.\.venv\Scripts\activate   # On Windows
 pip install -r requirements.txt
 ```
 
